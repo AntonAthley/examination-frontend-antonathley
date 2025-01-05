@@ -1,0 +1,132 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Montserrat:wght@400;500&display=swap");
+
+:root {
+  /* Black and White Variations */
+  --black-dark: #1a1a1a; /* Very Dark Black */
+  --black-light: #333333; /* Lighter Black */
+  --white-pure: #ffffff; /* Pure White */
+  --white-soft: #f9f9f9; /* Softer White */
+
+  /* Primary Colors */
+  --primary-orange: #dd7036; /* Primary (H) */
+  --background-white: #ffffff; /* Main Background (M) */
+  --accent-yellow: #eece44; /* Accent/Highlight (B) */
+  --accessible-yellow: #eecc47; /* Light Yellow - Accessible */
+
+  /* Secondary Colors */
+  --secondary-pink: #e2afcf; /* Secondary Background */
+  --secondary-dark-pink: #cb4ca9; /* Secondary Accent (D) */
+  --secondary-turquoise: #8fc7ba; /* Secondary Background */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  size: 100%;
+}
+
+body {
+  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Baloo 2", "Fredoka One", "Verdana", Geneva, sans-serif;
+  font-weight: 700;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.header {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--black-dark),
+    var(--black-dark) 20%,
+    var(--black-light) 20%,
+    var(--black-light) 40%
+  );
+  padding: 20px 0;
+  height: 300px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header img {
+  width: 200px;
+}
+
+.footer {
+  background: var(--black-dark);
+  padding: 40px 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  text-align: center;
+}
+
+.footer .container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.footer-column h2 {
+  margin-bottom: 20px;
+}
+
+.footer-column:nth-child(1) h2 {
+  color: var(--primary-orange);
+}
+.footer-column:nth-child(2) h2 {
+  color: var(--secondary-turquoise);
+}
+.footer-column:nth-child(3) h2 {
+  color: var(--accent-yellow);
+}
+.footer-column:nth-child(4) h2 {
+  color: var(--secondary-dark-pink);
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column a {
+  color: var(--white-pure);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-column a:hover {
+  opacity: 0.8;
+}
+
+.footer-column i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+}
