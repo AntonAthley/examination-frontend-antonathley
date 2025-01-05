@@ -233,6 +233,7 @@ main {
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.2s;
+  cursor: pointer;
 }
 
 .movie-card:hover {

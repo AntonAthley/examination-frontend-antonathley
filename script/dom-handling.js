@@ -1,10 +1,46 @@
 import { fetchMovieLists, searchMovies } from "./api-fetch.js";
 
+export function initScrollToTop() {
+  const scrollBtn = document.getElementById("scroll-top");
+
+  if (!scrollBtn) return; // Exit if button doesn't exist
+
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      scrollBtn.classList.add("visible");
+    } else {
+      scrollBtn.classList.remove("visible");
+    }
+  });
+
+  scrollBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+}
+
+// Separate initialization for main page
+export function initMainPage() {
+  const mainContainer = document.querySelector(".main-container");
+  if (!mainContainer) return; // Exit if not on main page
+
+  displayMovies();
+  initScrollToTop();
+  initializeSearch();
+}
+
+// Separate initialization for product page
+export function initProductPage() {
+  initScrollToTop();
+}
+
 async function displayMovies() {
   const mainContainer = document.querySelector(".main-container");
   const movieLists = await fetchMovieLists();
 
-  if (!movieLists) return;
+  if (!movieLists || !mainContainer) return;
 
   const sections = [
     { title: "Popular Movies", movies: movieLists.popular },
@@ -26,6 +62,11 @@ async function displayMovies() {
       const movieCard = document.createElement("div");
       movieCard.classList.add("movie-card");
 
+      // Add click event listener to navigate to product page
+      movieCard.addEventListener("click", () => {
+        window.location.href = `product-page.html?id=${movie.id}`;
+      });
+
       const poster = document.createElement("img");
       poster.src = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
       poster.alt = movie.title;
@@ -40,26 +81,6 @@ async function displayMovies() {
 
     sectionElement.appendChild(movieGrid);
     mainContainer.appendChild(sectionElement);
-  });
-}
-
-function initScrollToTop() {
-  const scrollBtn = document.getElementById("scroll-top");
-
-  window.addEventListener("scroll", () => {
-    // Show button when page is scrolled more than 100px
-    if (window.scrollY > 100) {
-      scrollBtn.classList.add("visible");
-    } else {
-      scrollBtn.classList.remove("visible");
-    }
-  });
-
-  scrollBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   });
 }
 
@@ -110,10 +131,15 @@ function initializeSearch() {
           const movieCard = document.createElement("div");
           movieCard.classList.add("movie-card");
 
+          // Add click event listener for search results
+          movieCard.addEventListener("click", () => {
+            window.location.href = `product-page.html?id=${movie.id}`;
+          });
+
           const poster = document.createElement("img");
           poster.src = movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : "../images/no-poster.png"; // You'll need to add a default image
+            : "../images/no-poster.png";
           poster.alt = movie.title;
 
           const title = document.createElement("h3");
@@ -132,6 +158,10 @@ function initializeSearch() {
   });
 }
 
-displayMovies();
-initScrollToTop();
-initializeSearch();
+// Initialize based on current page
+document.addEventListener("DOMContentLoaded", () => {
+  // Check which page we're on
+  if (document.querySelector(".main-container")) {
+    initMainPage();
+  }
+});

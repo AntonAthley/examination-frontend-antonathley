@@ -54,6 +54,37 @@ async function searchMovies(query) {
   }
 }
 
+async function fetchMovieDetails(movieId) {
+  if (!movieId) {
+    console.error("No movie ID provided");
+    return null;
+  }
+
+  try {
+    // Fetch all movie data in parallel
+    const [movieData, creditsData, videosData] = await Promise.all([
+      fetch(`${BASE_URL}/${movieId}?api_key=${API_KEY}&language=en-US`).then(
+        (res) => res.json()
+      ),
+      fetch(`${BASE_URL}/${movieId}/credits?api_key=${API_KEY}`).then((res) =>
+        res.json()
+      ),
+      fetch(`${BASE_URL}/${movieId}/videos?api_key=${API_KEY}`).then((res) =>
+        res.json()
+      ),
+    ]);
+
+    return {
+      ...movieData,
+      cast: creditsData.cast,
+      videos: videosData.results,
+    };
+  } catch (error) {
+    console.error("Error fetching movie details:", error);
+    return null;
+  }
+}
+
 // fetchMovieLists();
 
-export { fetchMovieLists, searchMovies };
+export { fetchMovieLists, searchMovies, fetchMovieDetails };
