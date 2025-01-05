@@ -10,18 +10,33 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     />
   </head>
-  <body>
+  <body id="top">
+    <button id="scroll-top" class="scroll-top-btn" aria-label="Scroll to top">
+      <i class="fas fa-chevron-up"></i>
+    </button>
     <div class="header">
       <div class="container">
-        <img src="../images/HMDb_logo-hk-colors-upscaled.png" alt="HMBd_logo" />
-        <h1>DETTA ÄR EN HEADER</h1>
+        <div class="header-content">
+          <a href="#">
+            <img
+              src="../images/HMDb_logo-hk-colors-upscaled.png"
+              alt="HMBd_logo"
+            />
+          </a>
+          <form class="search-form">
+            <input
+              type="search"
+              id="movie-search"
+              placeholder="Sök efter filmer..."
+              aria-label="Sök efter filmer"
+            />
+          </form>
+        </div>
       </div>
     </div>
 
     <main>
-      <div class="container">
-        <!-- your main content -->
-      </div>
+      <div class="main-container container"></div>
     </main>
 
     <div class="footer">
@@ -131,5 +146,6 @@
       </div>
     </div>
     <script type="module" src="../script/api-fetch.js"></script>
+    <script type="module" src="../script/dom-handling.js"></script>
   </body>
 </html>

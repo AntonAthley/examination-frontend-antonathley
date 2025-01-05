@@ -38,4 +38,22 @@ async function fetchMovieLists() {
   }
 }
 
+async function searchMovies(query) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
+        query
+      )}`
+    );
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const data = await response.json();
+    return data.results;
+  } catch (error) {
+    console.error("Error searching movies:", error);
+    return null;
+  }
+}
+
 // fetchMovieLists();
+
+export { fetchMovieLists, searchMovies };
