@@ -31,6 +31,14 @@
               aria-label="Sök efter filmer"
             />
           </form>
+          <button id="favorites-toggle" aria-label="Visa favoriter">
+            <i class="far fa-heart"></i>
+          </button>
+          <div
+            id="favorites-dropdown"
+            class="favorites-dropdown"
+            style="display: none"
+          ></div>
         </div>
       </div>
     </div>
@@ -42,13 +50,13 @@
     <div class="footer">
       <div class="container">
         <div class="footer-column">
-          <h2>OM HEMMAKVALL</h2>
+          <h2>OM HEMMAKVÄLL</h2>
           <ul>
             <li>
               <a
                 href="https://www.hemmakvall.se/hemmakvalls-historia/"
                 target="_blank"
-                >OM HEMMAKVALL</a
+                >OM HEMMAKVÄLL</a
               >
             </li>
             <li>
@@ -145,7 +153,13 @@
         </div>
       </div>
     </div>
+    <div
+      id="favorites-dropdown"
+      class="favorites-dropdown"
+      style="display: none"
+    ></div>
     <script type="module" src="../script/api-fetch.js"></script>
     <script type="module" src="../script/dom-handling.js"></script>
+    <script type="module" src="../script/handle-favourites.js"></script>
   </body>
 </html>

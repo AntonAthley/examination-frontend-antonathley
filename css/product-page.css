@@ -23,12 +23,13 @@
 .movie-title {
   font-size: 2.5rem;
   margin-bottom: 20px;
-  color: var(--primary-orange);
+  color: var(--white-pure);
 }
 
 .movie-description {
   font-size: 1.1rem;
   line-height: 1.6;
+  color: var(--white-pure);
 }
 
 .trailer-section {
@@ -93,19 +94,26 @@
   }
 }
 
+.movie-header,
 .back-button {
   margin: 20px 0;
   padding: 10px 20px;
   background-color: var(--primary-orange);
-  color: white;
+  color: var(--white-pure);
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 1rem;
   transition: background-color 0.2s;
+}
+
+.movie-header {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--black-dark),
+    var(--black-dark) 20%,
+    var(--black-light) 20%,
+    var(--black-light) 40%
+  );
 }
 
 .back-button:hover {

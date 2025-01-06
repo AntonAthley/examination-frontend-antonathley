@@ -26,6 +26,14 @@
             />
           </a>
         </div>
+        <button id="favorites-toggle" aria-label="Visa favoriter">
+          <i class="far fa-heart"></i>
+        </button>
+        <div
+          id="favorites-dropdown"
+          class="favorites-dropdown"
+          style="display: none"
+        ></div>
       </div>
     </div>
 
@@ -161,5 +169,6 @@
     </div>
     <script type="module" src="../script/api-fetch.js"></script>
     <script type="module" src="../script/product-page.js"></script>
+    <script type="module" src="../script/handle-favourites.js"></script>
   </body>
 </html>

@@ -1,10 +1,9 @@
 import { fetchMovieDetails } from "./api-fetch.js";
 import { initProductPage } from "./dom-handling.js";
 
+// Funktion för att ladda filmdetaljer
 async function loadMovieDetails() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const movieId = urlParams.get("id");
-
+  const movieId = new URLSearchParams(window.location.search).get("id");
   const movieData = await fetchMovieDetails(movieId);
   if (movieData) {
     displayMovieDetails(movieData);
@@ -13,24 +12,23 @@ async function loadMovieDetails() {
   }
 }
 
+// Funktion för att visa filmdetaljer
 function displayMovieDetails(movie) {
-  // Set page title
   document.title = movie.title;
-
-  // Populate main content
-  document.querySelector(".movie-title").textContent = movie.title;
-  document.querySelector(".movie-description").textContent = movie.overview;
-
-  // Set main poster (using TMDB image URL)
-  document.querySelector(".main-poster").innerHTML = `
+  updateElementText(".movie-title", movie.title);
+  updateElementText(".movie-description", movie.overview);
+  updateElementHTML(
+    ".main-poster",
+    `
         <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" 
              alt="${movie.title}">
-    `;
-
-  // Add trailer (if available)
+    `
+  );
   const trailer = movie.videos.find((video) => video.type === "Trailer");
   if (trailer) {
-    document.querySelector(".trailer-section").innerHTML = `
+    updateElementHTML(
+      ".trailer-section",
+      `
             <h2>Trailer</h2>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/${trailer.key}" 
@@ -38,10 +36,9 @@ function displayMovieDetails(movie) {
                         allowfullscreen>
                 </iframe>
             </div>
-        `;
+        `
+    );
   }
-
-  // Add cast members (limit to first 10)
   const castGallery = document.querySelector(".cast-gallery");
   movie.cast.slice(0, 10).forEach((actor) => {
     if (actor.profile_path) {
@@ -57,7 +54,17 @@ function displayMovieDetails(movie) {
   });
 }
 
-// Add back button functionality
+// Funktion för att uppdatera textinnehåll
+function updateElementText(selector, text) {
+  document.querySelector(selector).textContent = text;
+}
+
+// Funktion för att uppdatera HTML-innehåll
+function updateElementHTML(selector, html) {
+  document.querySelector(selector).innerHTML = html;
+}
+
+// Funktion för att initiera tillbaka-knappen
 function initBackButton() {
   const backButton = document.querySelector(".back-button");
   if (backButton) {
@@ -67,9 +74,9 @@ function initBackButton() {
   }
 }
 
-// Load movie details when page loads
+// Ladda filmdetaljer när sidan laddas
 document.addEventListener("DOMContentLoaded", () => {
   loadMovieDetails();
   initProductPage();
-  initBackButton(); // Initialize back button
+  initBackButton();
 });
