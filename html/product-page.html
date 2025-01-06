@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HMBd</title>
     <link rel="stylesheet" href="../css/utils.css" />
+    <link rel="stylesheet" href="../css/product-page.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -14,41 +15,54 @@
     <button id="scroll-top" class="scroll-top-btn" aria-label="Scroll to top">
       <i class="fas fa-chevron-up"></i>
     </button>
+
     <div class="header">
       <div class="container">
         <div class="header-content">
-          <a href="#">
+          <a href="index.html">
             <img
               src="../images/HMDb_logo-hk-colors-upscaled.png"
               alt="HMBd_logo"
             />
           </a>
-          <form class="search-form">
-            <input
-              type="search"
-              id="movie-search"
-              placeholder="Sök efter filmer..."
-              aria-label="Sök efter filmer"
-            />
-          </form>
         </div>
       </div>
     </div>
 
     <main>
-      <div class="main-container container"></div>
+      <div class="container">
+        <button class="back-button">
+          <i class="fas fa-arrow-left"></i> Tillbaka
+        </button>
+        <div class="movie-details">
+          <div class="movie-header">
+            <div class="main-poster"></div>
+            <div class="movie-info">
+              <h1 class="movie-title"></h1>
+              <p class="movie-description"></p>
+            </div>
+          </div>
+
+          <div class="trailer-section"></div>
+
+          <div class="cast-section">
+            <h2>Rollista</h2>
+            <div class="cast-gallery"></div>
+          </div>
+        </div>
+      </div>
     </main>
 
     <div class="footer">
       <div class="container">
         <div class="footer-column">
-          <h2>OM HEMMAKVALL</h2>
+          <h2>OM HEMMAKVÄLL</h2>
           <ul>
             <li>
               <a
                 href="https://www.hemmakvall.se/hemmakvalls-historia/"
                 target="_blank"
-                >OM HEMMAKVALL</a
+                >OM HEMMAKVÄLL</a
               >
             </li>
             <li>
@@ -146,6 +160,6 @@
       </div>
     </div>
     <script type="module" src="../script/api-fetch.js"></script>
-    <script type="module" src="../script/dom-handling.js"></script>
+    <script type="module" src="../script/product-page.js"></script>
   </body>
 </html>
