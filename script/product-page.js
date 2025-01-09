@@ -1,14 +1,23 @@
 import { fetchMovieDetails } from "./api-fetch.js";
-import { initProductPage } from "./dom-handling.js";
+import { initProductPage, displayErrorMessage } from "./dom-handling.js";
 
 // Funktion för att ladda filmdetaljer
 async function loadMovieDetails() {
   const movieId = new URLSearchParams(window.location.search).get("id");
+
+  if (!movieId) {
+    console.error("No movie ID in URL");
+    displayErrorMessage(400);
+    return;
+  }
+
   const movieData = await fetchMovieDetails(movieId);
+
   if (movieData) {
     displayMovieDetails(movieData);
   } else {
     console.error("Failed to load movie details");
+    displayErrorMessage(500);
   }
 }
 

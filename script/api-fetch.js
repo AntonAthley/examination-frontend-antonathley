@@ -1,3 +1,5 @@
+import { displayErrorMessage } from "./dom-handling.js";
+
 const API_KEY = "43ac502565e2855ce307337744abfc71";
 const BASE_URL = "https://api.themoviedb.org/3/movie";
 
@@ -5,7 +7,10 @@ async function fetchFromEndpoint(endpoint) {
   // Hämtar data från en specifik API-endpoint
   try {
     const response = await fetch(`${BASE_URL}/${endpoint}?api_key=${API_KEY}`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      displayErrorMessage(response.status);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     return data.results;
   } catch (error) {
@@ -25,12 +30,18 @@ async function fetchMovieLists() {
 
     const [popular, topRated] = results;
 
+    if (!popular || !topRated) {
+      displayErrorMessage(500);
+      return null;
+    }
+
     return {
       popular,
       topRated,
     };
   } catch (error) {
     console.error("Error in fetchMovieLists:", error);
+    displayErrorMessage(500);
     return null;
   }
 }
@@ -43,7 +54,10 @@ async function searchMovies(query) {
         query
       )}`
     );
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    if (!response.ok) {
+      displayErrorMessage(response.status);
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
     const data = await response.json();
     return data.results;
   } catch (error) {
@@ -56,21 +70,32 @@ async function fetchMovieDetails(movieId) {
   // Hämtar detaljer för en specifik film baserat på filmens ID
   if (!movieId) {
     console.error("No movie ID provided");
+    displayErrorMessage(400);
     return null;
   }
 
   try {
-    // Fetch all movie data in parallel
+    const [movieResponse, creditsResponse, videosResponse] = await Promise.all([
+      fetch(`${BASE_URL}/${movieId}?api_key=${API_KEY}&language=en-US`),
+      fetch(`${BASE_URL}/${movieId}/credits?api_key=${API_KEY}`),
+      fetch(`${BASE_URL}/${movieId}/videos?api_key=${API_KEY}`),
+    ]);
+
+    // Kontrollera om något svar inte är OK
+    if (!movieResponse.ok || !creditsResponse.ok || !videosResponse.ok) {
+      const statusCode = Math.max(
+        movieResponse.status,
+        creditsResponse.status,
+        videosResponse.status
+      );
+      displayErrorMessage(statusCode);
+      return null;
+    }
+
     const [movieData, creditsData, videosData] = await Promise.all([
-      fetch(`${BASE_URL}/${movieId}?api_key=${API_KEY}&language=en-US`).then(
-        (res) => res.json()
-      ),
-      fetch(`${BASE_URL}/${movieId}/credits?api_key=${API_KEY}`).then((res) =>
-        res.json()
-      ),
-      fetch(`${BASE_URL}/${movieId}/videos?api_key=${API_KEY}`).then((res) =>
-        res.json()
-      ),
+      movieResponse.json(),
+      creditsResponse.json(),
+      videosResponse.json(),
     ]);
 
     return {
@@ -80,10 +105,9 @@ async function fetchMovieDetails(movieId) {
     };
   } catch (error) {
     console.error("Error fetching movie details:", error);
+    displayErrorMessage(500);
     return null;
   }
 }
-
-// fetchMovieLists();
 
 export { fetchMovieLists, searchMovies, fetchMovieDetails };

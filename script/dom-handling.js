@@ -1,6 +1,19 @@
 import { fetchMovieLists, searchMovies } from "./api-fetch.js";
 import { addFavoriteIcons } from "./handle-favourites.js";
 
+// Funktion för att visa ett felmeddelande
+function displayErrorMessage(statusCode) {
+  const mainContainer = document.querySelector(".main-container");
+  if (!mainContainer) return;
+
+  const errorMessage = document.createElement("h2");
+  errorMessage.classList.add("error-message");
+  errorMessage.textContent = `${statusCode}: Hoppsan, något gick fel :( Försök igen senare.`;
+
+  mainContainer.innerHTML = "";
+  mainContainer.appendChild(errorMessage);
+}
+
 // Funktion för att initiera scroll till toppen
 export function initScrollToTop() {
   const scrollBtn = document.getElementById("scroll-top");
@@ -161,3 +174,5 @@ document.addEventListener("DOMContentLoaded", () => {
     initMainPage();
   }
 });
+
+export { displayErrorMessage };

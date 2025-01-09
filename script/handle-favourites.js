@@ -48,7 +48,7 @@ function renderFavoritesDropdown() {
   dropdown.innerHTML = "";
 
   if (favorites.length === 0) {
-    dropdown.innerHTML = "<p>No favorites yet.</p>";
+    dropdown.innerHTML = "<p>Du har inga favoriter än.</p>";
     return;
   }
 
